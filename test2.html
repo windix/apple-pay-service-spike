@@ -105,7 +105,7 @@
     // 4. Required Handlers (OTT & Shipping)
     button.onSuccess(({ data }) => {
       console.log('Payment successful:', data)
-      processPayment(data.token)
+      // processPayment(data.token)
     })
 
     button.onShippingAddressChange(async ({ data }) => {

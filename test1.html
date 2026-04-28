@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Apple Pay with Open Wallets</title>
+  </head>
+  <body>
+    <h2>Payment using Paydock Apple Pay Open Wallet Button!</h2>
+    <div id="widget"></div>
+  </body>
+  <script src="https://widget.paydock.com/sdk/latest/widget.umd.min.js"></script>
+  <script>
+    // 1. Initialize the Button
+    let button = new paydock.ApplePayOpenWalletButton(
+      '#widget',
+      '1a12e2a7157c13ae553075712f7ec09ef9627609',
+      '69eb1300912e3e7a442a7176',
+      {
+        amount: 100,
+        currency: 'AUD',
+        country: 'AU',
+        amount_label: 'TOTAL',
+        store_name: 'My Store',
+      }
+    );
+
+    // 2. Set Environment
+    button.setEnv('sandbox')
+
+    // 3. Optional Handlers
+    button.onUnavailable(({ data }) => {
+      console.log('Apple Pay not available:', data)
+    })
+
+    button.onClick(({ data }) => {
+      console.log('Apple Pay button clicked')
+      // Aborts the wallet sheet from opening
+      if (!termsAccepted) return false
+    })
+
+    button.onError(({ data }) => {
+      console.error('Payment error:', data)
+    })
+
+    button.onCancel(() => {
+      console.log('Payment cancelled')
+    })
+
+    // 4. Required Handlers (OTT & Shipping)
+    button.onSuccess(({ data }) => {
+      console.log('Payment successful:', data)
+    })
+
+    // 5. Load the Button
+    button.load()
+  </script>
+</html>
